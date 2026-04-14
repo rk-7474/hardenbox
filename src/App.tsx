@@ -81,9 +81,12 @@ export default function App() {
           {/* Header */}
           <header className="border-b border-border-main px-10 flex items-center justify-between bg-card-bg">
             <div className="flex items-center gap-6">
-              <h1 className="font-extrabold text-xl tracking-tight uppercase">
-                HARDEN<span className="text-accent">BOX</span>
-              </h1>
+              <div className="flex items-center gap-3">
+                <img src="/hardenbox.png" alt="HardenBox Logo" className="w-8 h-8 object-contain" referrerPolicy="no-referrer" />
+                <h1 className="font-extrabold text-xl tracking-tight uppercase">
+                  HARDEN<span className="text-accent">BOX</span>
+                </h1>
+              </div>
               
               <div className="h-6 w-px bg-border-main" />
 
