@@ -76,27 +76,27 @@ export default function App() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-bg-main flex items-center justify-center p-4">
-        <div className="w-[960px] h-[680px] bg-card-bg border border-border-main rounded-xl shadow-lg overflow-hidden grid grid-rows-[80px_1fr_100px]">
+      <div className="h-screen bg-bg-main overflow-hidden">
+        <div className="w-full h-full bg-card-bg grid grid-rows-[96px_1fr_120px]">
           {/* Header */}
-          <header className="border-b border-border-main px-10 flex items-center justify-between bg-card-bg">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <img src="/hardenbox.png" alt="HardenBox Logo" className="w-8 h-8 object-contain" referrerPolicy="no-referrer" />
-                <h1 className="font-extrabold text-xl tracking-tight uppercase">
+          <header className="border-b border-border-main px-12 flex items-center justify-between bg-card-bg">
+            <div className="flex items-center gap-8">
+              <div className="flex items-center gap-4">
+                <img src="/hardenbox.png" alt="HardenBox Logo" className="w-10 h-10 object-contain" referrerPolicy="no-referrer" />
+                <h1 className="font-extrabold text-2xl tracking-tight uppercase">
                   HARDEN<span className="text-accent">BOX</span>
                 </h1>
               </div>
               
-              <div className="h-6 w-px bg-border-main" />
+              <div className="h-8 w-px bg-border-main" />
 
-              <div className="flex gap-1 bg-bg-main p-1 rounded-lg border border-border-main">
+              <div className="flex gap-1.5 bg-bg-main p-1.5 rounded-xl border border-border-main">
                 {(['ubuntu', 'debian', 'centos'] as Distro[]).map((d) => (
                   <button
                     key={d}
                     type="button"
                     onClick={() => setDistro(d)}
-                    className={`px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer select-none ${
+                    className={`px-5 py-2 rounded-lg text-[13px] font-bold uppercase tracking-wider transition-all cursor-pointer select-none ${
                       distro === d
                         ? 'bg-card-bg text-text-main shadow-sm border border-border-main'
                         : 'text-text-sub hover:text-text-main border border-transparent'
@@ -108,14 +108,14 @@ export default function App() {
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-5">
               <Button
                 variant="outline"
                 size="icon"
                 onClick={() => setIsDark(!isDark)}
-                className="rounded-full border-border-main bg-card-bg hover:bg-bg-main"
+                className="rounded-full border-border-main bg-card-bg hover:bg-bg-main w-12 h-12"
               >
-                {isDark ? <Sun className="w-4 h-4 text-accent" /> : <Moon className="w-4 h-4 text-text-sub" />}
+                {isDark ? <Sun className="w-5 h-5 text-accent" /> : <Moon className="w-5 h-5 text-text-sub" />}
               </Button>
             </div>
           </header>
@@ -123,45 +123,45 @@ export default function App() {
           {/* Main Content */}
           <div className="min-h-0 h-full overflow-hidden">
             <ScrollArea className="h-full border-none">
-              <main className="p-10 grid grid-cols-3 gap-x-8 gap-y-12">
+              <main className="p-12 grid grid-cols-3 gap-x-10 gap-y-14">
               {categories.map(category => (
-                <div key={category} className="flex flex-col gap-4">
-                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-text-sub mb-1 flex items-center gap-2">
-                    <span className="w-1 h-1 bg-accent rounded-full" />
+                <div key={category} className="flex flex-col gap-5">
+                  <h3 className="text-[12px] font-bold uppercase tracking-widest text-text-sub mb-1 flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full" />
                     {category.replace('_', ' ')}
                   </h3>
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-5">
                     {HARDENING_OPTIONS.filter(opt => opt.category === category).map(option => (
-                      <div key={option.id} className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2.5 relative group">
+                      <div key={option.id} className="flex flex-col gap-2.5">
+                        <div className="flex items-center gap-3 relative group">
                           <Checkbox 
                             id={option.id} 
                             checked={options[option.id]} 
                             onCheckedChange={() => handleToggleOption(option.id)}
-                            className="w-[18px] h-[18px] border-2 border-border-main rounded data-[state=checked]:bg-accent data-[state=checked]:border-accent"
+                            className="w-[22px] h-[22px] border-2 border-border-main rounded-md data-[state=checked]:bg-accent data-[state=checked]:border-accent"
                           />
                           <Label 
                             htmlFor={option.id} 
-                            className="text-[14px] font-medium cursor-pointer text-text-main leading-tight"
+                            className="text-[17px] font-medium cursor-pointer text-text-main leading-tight"
                           >
                             {option.label}
                           </Label>
-                          <div className="flex items-center gap-1.5 ml-auto shrink-0">
+                          <div className="flex items-center gap-2 ml-auto shrink-0">
                             <Tooltip>
-                              <TooltipTrigger className="w-3.5 h-3.5 bg-bg-main border border-border-main rounded-full flex items-center justify-center text-[10px] text-text-sub cursor-help">
+                              <TooltipTrigger className="w-4.5 h-4.5 bg-bg-main border border-border-main rounded-full flex items-center justify-center text-[12px] text-text-sub cursor-help">
                                 ?
                               </TooltipTrigger>
-                              <TooltipContent className="max-w-[200px] bg-text-main text-card-bg text-xs p-3 rounded-md shadow-xl border-none">
+                              <TooltipContent className="max-w-[240px] bg-text-main text-card-bg text-sm p-4 rounded-lg shadow-xl border-none">
                                 {option.description}
                               </TooltipContent>
                             </Tooltip>
 
                             <Tooltip>
-                              <TooltipTrigger className="w-3.5 h-3.5 bg-bg-main border border-border-main rounded-full flex items-center justify-center text-text-sub cursor-help">
-                                <Code className="w-2 h-2" />
+                              <TooltipTrigger className="w-4.5 h-4.5 bg-bg-main border border-border-main rounded-full flex items-center justify-center text-text-sub cursor-help">
+                                <Code className="w-2.5 h-2.5" />
                               </TooltipTrigger>
-                              <TooltipContent className="max-w-[500px] bg-zinc-900 text-zinc-300 text-[10px] p-3 rounded-md shadow-xl border border-zinc-800 font-mono whitespace-pre-wrap break-all">
-                                <div className="text-zinc-500 mb-1 uppercase text-[8px] font-bold tracking-wider">Command:</div>
+                              <TooltipContent className="max-w-[600px] bg-zinc-900 text-zinc-300 text-[12px] p-4 rounded-lg shadow-xl border border-zinc-800 font-mono whitespace-pre-wrap break-all">
+                                <div className="text-zinc-500 mb-1.5 uppercase text-[10px] font-bold tracking-wider">Command:</div>
                                 {option.scripts[distro] || option.scripts.generic || '# No script available'}
                               </TooltipContent>
                             </Tooltip>
@@ -173,14 +173,14 @@ export default function App() {
                           <motion.div 
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="ml-7 flex flex-col gap-1.5"
+                            className="ml-9 flex flex-col gap-2"
                           >
-                            <Label className="text-[10px] font-bold uppercase text-text-sub">Custom Port</Label>
+                            <Label className="text-[12px] font-bold uppercase text-text-sub">Custom Port</Label>
                             <input 
                               type="number" 
                               value={customPort}
                               onChange={(e) => setCustomPort(parseInt(e.target.value) || 22)}
-                              className="bg-card-bg border border-border-main rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-accent shadow-sm transition-all text-text-main"
+                              className="bg-card-bg border border-border-main rounded-xl px-4 py-2.5 text-base w-full focus:outline-none focus:border-accent shadow-sm transition-all text-text-main"
                               placeholder="e.g. 2222"
                             />
                           </motion.div>
@@ -190,26 +190,26 @@ export default function App() {
                           <motion.div 
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="ml-7 flex flex-col gap-3 p-3 bg-bg-main rounded-lg border border-border-main"
+                            className="ml-9 flex flex-col gap-4 p-4 bg-bg-main rounded-xl border border-border-main"
                           >
-                            <div className="flex flex-col gap-1.5">
-                              <Label className="text-[10px] font-bold uppercase text-text-sub">New Main User</Label>
+                            <div className="flex flex-col gap-2">
+                              <Label className="text-[12px] font-bold uppercase text-text-sub">New Main User</Label>
                               <input 
                                 type="text" 
                                 value={newUsername}
                                 onChange={(e) => setNewUsername(e.target.value)}
-                                className="bg-card-bg border border-border-main rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-accent shadow-sm transition-all text-text-main"
+                                className="bg-card-bg border border-border-main rounded-xl px-4 py-2.5 text-base w-full focus:outline-none focus:border-accent shadow-sm transition-all text-text-main"
                                 placeholder="Username"
                               />
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-3">
                               <Checkbox 
                                 id="isSudo" 
                                 checked={isSudo} 
                                 onCheckedChange={(v) => setIsSudo(!!v)}
-                                className="w-4 h-4 border-2 border-border-main rounded data-[state=checked]:bg-accent data-[state=checked]:border-accent"
+                                className="w-5 h-5 border-2 border-border-main rounded-md data-[state=checked]:bg-accent data-[state=checked]:border-accent"
                               />
-                              <Label htmlFor="isSudo" className="text-xs font-medium text-text-main">
+                              <Label htmlFor="isSudo" className="text-sm font-medium text-text-main">
                                 Grant Sudo Privileges
                               </Label>
                             </div>
@@ -220,14 +220,14 @@ export default function App() {
                           <motion.div 
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="ml-7 flex flex-col gap-1.5"
+                            className="ml-9 flex flex-col gap-2"
                           >
-                            <Label className="text-[10px] font-bold uppercase text-text-sub">Syslog Server</Label>
+                            <Label className="text-[12px] font-bold uppercase text-text-sub">Syslog Server</Label>
                             <input 
                               type="text" 
                               value={syslogServer}
                               onChange={(e) => setSyslogServer(e.target.value)}
-                              className="bg-card-bg border border-border-main rounded-lg px-3 py-2 text-sm w-full focus:outline-none focus:border-accent shadow-sm transition-all text-text-main"
+                              className="bg-card-bg border border-border-main rounded-xl px-4 py-2.5 text-base w-full focus:outline-none focus:border-accent shadow-sm transition-all text-text-main"
                               placeholder="logs.example.com"
                             />
                           </motion.div>
@@ -242,40 +242,40 @@ export default function App() {
         </div>
 
           {/* Footer */}
-          <footer className="border-t border-border-main px-10 flex items-center justify-between bg-card-bg">
-            <div className="text-sm text-text-sub">
+          <footer className="border-t border-border-main px-12 flex items-center justify-between bg-card-bg">
+            <div className="text-base text-text-sub">
               <span className="font-bold text-text-main">{activeCount}</span> security modules selected for <span className="font-bold text-text-main uppercase">{distro}</span>.
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-5">
               <Tooltip>
                 <TooltipTrigger 
-                  className="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-card-bg border-border-main size-10 transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px hover:bg-bg-main cursor-pointer"
+                  className="group/button inline-flex shrink-0 items-center justify-center rounded-xl border bg-card-bg border-border-main size-12 transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px hover:bg-bg-main cursor-pointer"
                   onClick={() => {
                     const win = window.open('', '_blank');
                     if (win) {
-                      win.document.write(`<pre style="padding: 20px; font-family: monospace; background: #030712; color: #F9FAFB; margin: 0; min-height: 100vh;">${script}</pre>`);
+                      win.document.write(`<pre style="padding: 24px; font-family: monospace; background: #030712; color: #F9FAFB; margin: 0; min-height: 100vh; font-size: 16px;">${script}</pre>`);
                       win.document.close();
                     }
                   }}
                 >
-                  <Terminal className="w-4 h-4 text-text-sub" />
+                  <Terminal className="w-5 h-5 text-text-sub" />
                 </TooltipTrigger>
                 <TooltipContent side="top">View Script Source</TooltipContent>
               </Tooltip>
 
               <Tooltip>
                 <TooltipTrigger 
-                  className="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-card-bg border-border-main size-10 transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px hover:bg-bg-main cursor-pointer"
+                  className="group/button inline-flex shrink-0 items-center justify-center rounded-xl border bg-card-bg border-border-main size-12 transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px hover:bg-bg-main cursor-pointer"
                   onClick={handleCopy}
                 >
-                  {copied ? <Check className="w-4 h-4 text-success-main" /> : <Copy className="w-4 h-4 text-text-sub" />}
+                  {copied ? <Check className="w-5 h-5 text-success-main" /> : <Copy className="w-5 h-5 text-text-sub" />}
                 </TooltipTrigger>
                 <TooltipContent side="top">{copied ? 'Copied!' : 'Copy Snippet'}</TooltipContent>
               </Tooltip>
 
               <Button 
                 onClick={handleDownload}
-                className="px-6 py-2.5 h-10 rounded-lg bg-accent hover:bg-blue-700 text-white font-semibold text-sm border-none cursor-pointer"
+                className="px-8 py-3 h-12 rounded-xl bg-accent hover:bg-blue-700 text-white font-bold text-base border-none cursor-pointer"
               >
                 Generate hardening.sh
               </Button>
