@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-bg-main: var(--bg-main);
+  --color-card-bg: var(--card-bg);
+  --color-text-main: var(--text-main);
+  --color-text-sub: var(--text-sub);
+  --color-accent: var(--accent);
+  --color-border-main: var(--border-main);
+  --color-border: var(--border-main);
+  --color-success-main: #059669;
+  --color-ring: var(--accent);
+}
+
+:root {
+  --bg-main: #F9FAFB;
+  --card-bg: #FFFFFF;
+  --text-main: #111827;
+  --text-sub: #6B7280;
+  --accent: #2563EB;
+  --border-main: #E5E7EB;
+}
+
+.dark {
+  --bg-main: #030712;
+  --card-bg: #111827;
+  --text-main: #F9FAFB;
+  --text-sub: #9CA3AF;
+  --accent: #3B82F6;
+  --border-main: #1F2937;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-main text-text-main font-sans transition-colors duration-300;
+  }
+}

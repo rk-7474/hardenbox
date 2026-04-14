@@ -1,0 +1,6 @@
+{
+  "name": "HardenBox",
+  "description": "The ultimate VPS security hardening script generator. Automate SSH security, firewall configuration, kernel tuning, and system auditing for Ubuntu, Debian, and CentOS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["Hardening Script Generation", "Security Education", "Multi-Distro Support", "Dark Mode Support"]
+}
