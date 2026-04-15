@@ -18,7 +18,7 @@ export function TrustDialog({ isOpen, onClose, script }: TrustDialogProps) {
     }
   }, [isOpen]);
 
-  const auditPrompt = `I am using a tool called HardenBox to generate a security hardening script for my Linux server. Can you evaluate if the following script is safe to run? Does it contain any malicious commands or potential security risks?
+  const auditPrompt = `I am using a tool called HardenBox to generate a security hardening script for my Linux server. Is this good for a safe production ready server? Does it contain any malicious commands? This script is designed only for fresh installs and the user is prompted to choose only the feature he needs.
 
 Script:
 ${script}`;

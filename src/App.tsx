@@ -26,6 +26,7 @@ import { HARDENING_OPTIONS } from './constants';
 import { generateHardeningScript } from './lib/script-generator';
 import { Distro } from './types';
 import { TrustDialog } from '@/components/TrustDialog';
+import { WelcomeDialog } from '@/components/WelcomeDialog';
 
 export default function App() {
   const [distro, setDistro] = useState<Distro>('ubuntu');
@@ -39,6 +40,19 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [isTrustDialogOpen, setIsTrustDialogOpen] = useState(false);
+  const [isWelcomeDialogOpen, setIsWelcomeDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hardenbox_visited');
+    if (!hasVisited) {
+      setIsWelcomeDialogOpen(true);
+    }
+  }, []);
+
+  const handleCloseWelcome = () => {
+    localStorage.setItem('hardenbox_visited', 'true');
+    setIsWelcomeDialogOpen(false);
+  };
 
   useEffect(() => {
     if (isDark) {
@@ -311,6 +325,10 @@ export default function App() {
         isOpen={isTrustDialogOpen} 
         onClose={() => setIsTrustDialogOpen(false)} 
         script={script} 
+      />
+      <WelcomeDialog 
+        isOpen={isWelcomeDialogOpen} 
+        onClose={handleCloseWelcome} 
       />
     </TooltipProvider>
   );
