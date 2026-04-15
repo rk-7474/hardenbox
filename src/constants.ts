@@ -370,7 +370,7 @@ chmod 440 /etc/sudoers.d/hardening`
   {
     id: 'tmp_noexec',
     label: 'Mount /tmp with noexec, nosuid, nodev',
-    description: 'Remounts /tmp so that binaries cannot be executed from it and setuid bits are ignored. A very common technique is to drop malware in /tmp and run it directly.',
+    description: 'Remounts /tmp so that binaries cannot be executed from it and setuid bits are ignored. A very common technique is to drop malware in /tmp and run it directly. [!] Can cause compatibility issues!',
     defaultChecked: true,
     category: 'filesystem',
     scripts: {
@@ -598,7 +598,7 @@ EOF`
   {
     id: 'apparmor',
     label: 'Enable AppArmor',
-    description: 'Installs and enables AppArmor, a mandatory access control framework that confines programs to a limited set of resources. A critical defence-in-depth layer on Debian/Ubuntu.',
+    description: 'Installs and enables AppArmor, a mandatory access control framework that confines programs to a limited set of resources. A critical defence-in-depth layer on Debian/Ubuntu. [!] Can cause compatibility issues!',
     defaultChecked: true,
     category: 'security_modules',
     scripts: {
