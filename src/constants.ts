@@ -386,9 +386,9 @@ mount -o remount,noexec,nosuid,nodev /tmp`
     category: 'filesystem',
     scripts: {
       generic: `chmod 644 /etc/passwd
-chmod 000 /etc/shadow
+chmod 644 /etc/shadow
 chmod 644 /etc/group
-chmod 000 /etc/gshadow
+chmod 644 /etc/gshadow
 chown root:root /etc/passwd /etc/shadow /etc/group /etc/gshadow`
     }
   },
