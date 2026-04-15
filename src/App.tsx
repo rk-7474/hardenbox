@@ -12,7 +12,8 @@ import {
   Code,
   Sun,
   Moon,
-  ShieldAlert
+  ShieldAlert,
+  Info
 } from 'lucide-react';
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -27,6 +28,7 @@ import { generateHardeningScript } from './lib/script-generator';
 import { Distro } from './types';
 import { TrustDialog } from '@/components/TrustDialog';
 import { WelcomeDialog } from '@/components/WelcomeDialog';
+import { InfoDialog } from '@/components/InfoDialog';
 
 export default function App() {
   const [distro, setDistro] = useState<Distro>('ubuntu');
@@ -41,6 +43,7 @@ export default function App() {
   const [isDark, setIsDark] = useState(false);
   const [isTrustDialogOpen, setIsTrustDialogOpen] = useState(false);
   const [isWelcomeDialogOpen, setIsWelcomeDialogOpen] = useState(false);
+  const [isInfoDialogOpen, setIsInfoDialogOpen] = useState(false);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem('hardenbox_visited');
@@ -105,7 +108,15 @@ export default function App() {
                     HARDEN<span className="text-accent">BOX</span>
                   </h1>
                 </div>
-                <div className="md:hidden">
+                <div className="md:hidden flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setIsInfoDialogOpen(true)}
+                    className="rounded-full border-border-main bg-card-bg hover:bg-bg-main w-10 h-10"
+                  >
+                    <Info className="w-4 h-4 text-text-sub" />
+                  </Button>
                   <Button
                     variant="outline"
                     size="icon"
@@ -137,7 +148,15 @@ export default function App() {
               </div>
             </div>
             
-            <div className="hidden md:flex items-center gap-5">
+            <div className="hidden md:flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setIsInfoDialogOpen(true)}
+                className="rounded-full border-border-main bg-card-bg hover:bg-bg-main w-12 h-12"
+              >
+                <Info className="w-5 h-5 text-text-sub" />
+              </Button>
               <Button
                 variant="outline"
                 size="icon"
@@ -329,6 +348,10 @@ export default function App() {
       <WelcomeDialog 
         isOpen={isWelcomeDialogOpen} 
         onClose={handleCloseWelcome} 
+      />
+      <InfoDialog 
+        isOpen={isInfoDialogOpen} 
+        onClose={() => setIsInfoDialogOpen(false)} 
       />
     </TooltipProvider>
   );
