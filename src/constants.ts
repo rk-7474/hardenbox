@@ -11,7 +11,7 @@ export const HARDENING_OPTIONS: HardeningOption[] = [
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*PermitRootLogin.*/PermitRootLogin no/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "PermitRootLogin" "no"'
     }
   },
   {
@@ -21,7 +21,7 @@ export const HARDENING_OPTIONS: HardeningOption[] = [
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*PasswordAuthentication.*/PasswordAuthentication no/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "PasswordAuthentication" "no"'
     }
   },
   {
@@ -31,7 +31,7 @@ export const HARDENING_OPTIONS: HardeningOption[] = [
     defaultChecked: false,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*Port 22/Port {{SSH_PORT}}/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "Port" "{{SSH_PORT}}"'
     }
   },
   {
@@ -41,7 +41,7 @@ export const HARDENING_OPTIONS: HardeningOption[] = [
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*UseDNS.*/UseDNS no/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "UseDNS" "no"'
     }
   },
   {
@@ -51,7 +51,7 @@ export const HARDENING_OPTIONS: HardeningOption[] = [
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*MaxAuthTries.*/MaxAuthTries 3/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "MaxAuthTries" "3"'
     }
   },
   {
@@ -61,7 +61,7 @@ export const HARDENING_OPTIONS: HardeningOption[] = [
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*LoginGraceTime.*/LoginGraceTime 30/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "LoginGraceTime" "30"'
     }
   },
   {
@@ -71,8 +71,8 @@ export const HARDENING_OPTIONS: HardeningOption[] = [
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: `sed -i "s/^#*ClientAliveInterval.*/ClientAliveInterval 300/" /etc/ssh/sshd_config
-sed -i "s/^#*ClientAliveCountMax.*/ClientAliveCountMax 0/" /etc/ssh/sshd_config`
+      generic: `set_config "/etc/ssh/sshd_config" "ClientAliveInterval" "300"
+set_config "/etc/ssh/sshd_config" "ClientAliveCountMax" "0"`
     }
   },
   {
@@ -82,7 +82,7 @@ sed -i "s/^#*ClientAliveCountMax.*/ClientAliveCountMax 0/" /etc/ssh/sshd_config`
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*PermitEmptyPasswords.*/PermitEmptyPasswords no/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "PermitEmptyPasswords" "no"'
     }
   },
   {
@@ -92,7 +92,7 @@ sed -i "s/^#*ClientAliveCountMax.*/ClientAliveCountMax 0/" /etc/ssh/sshd_config`
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*X11Forwarding.*/X11Forwarding no/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "X11Forwarding" "no"'
     }
   },
   {
@@ -102,7 +102,7 @@ sed -i "s/^#*ClientAliveCountMax.*/ClientAliveCountMax 0/" /etc/ssh/sshd_config`
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*AllowAgentForwarding.*/AllowAgentForwarding no/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "AllowAgentForwarding" "no"'
     }
   },
   {
@@ -112,7 +112,7 @@ sed -i "s/^#*ClientAliveCountMax.*/ClientAliveCountMax 0/" /etc/ssh/sshd_config`
     defaultChecked: false,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*AllowTcpForwarding.*/AllowTcpForwarding no/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "AllowTcpForwarding" "no"'
     }
   },
   {
@@ -122,13 +122,9 @@ sed -i "s/^#*ClientAliveCountMax.*/ClientAliveCountMax 0/" /etc/ssh/sshd_config`
     defaultChecked: true,
     category: 'ssh',
     scripts: {
-      generic: `cat <<'EOF' >> /etc/ssh/sshd_config
-
-# Strong cryptography — added by hardening script
-KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512
-Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com
-MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
-EOF`
+      generic: `set_config "/etc/ssh/sshd_config" "KexAlgorithms" "curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512"
+set_config "/etc/ssh/sshd_config" "Ciphers" "chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com"
+set_config "/etc/ssh/sshd_config" "MACs" "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com"`
     }
   },
   {
@@ -138,7 +134,7 @@ EOF`
     defaultChecked: false,
     category: 'ssh',
     scripts: {
-      generic: 'sed -i "s/^#*MaxSessions.*/MaxSessions 2/" /etc/ssh/sshd_config'
+      generic: 'set_config "/etc/ssh/sshd_config" "MaxSessions" "2"'
     }
   },
 
@@ -162,7 +158,7 @@ EOF`
     defaultChecked: false,
     category: 'firewall',
     scripts: {
-      generic: `cat <<'EOF' >> /etc/sysctl.d/99-disable-ipv6.conf
+      generic: `cat <<'EOF' > /etc/sysctl.d/99-disable-ipv6.conf
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 net.ipv6.conf.lo.disable_ipv6 = 1
@@ -236,14 +232,14 @@ sysctl -p /etc/sysctl.d/99-hardening.conf`
     defaultChecked: true,
     category: 'kernel',
     scripts: {
-      generic: `cat <<'EOF' >> /etc/security/limits.conf
+      generic: `if ! grep -q "* hard core 0" /etc/security/limits.conf; then
+  cat <<'EOF' >> /etc/security/limits.conf
 * hard core 0
 * soft core 0
 EOF
-cat <<'EOF' >> /etc/sysctl.d/99-hardening.conf
-fs.suid_dumpable = 0
-kernel.core_pattern = |/bin/false
-EOF
+fi
+set_config "/etc/sysctl.d/99-hardening.conf" "fs.suid_dumpable" "0" " = "
+set_config "/etc/sysctl.d/99-hardening.conf" "kernel.core_pattern" "|/bin/false" " = "
 sysctl -p /etc/sysctl.d/99-hardening.conf`
     }
   },
@@ -265,7 +261,7 @@ echo "blacklist usb-storage" >> /etc/modprobe.d/disable-usb-storage.conf`
     defaultChecked: true,
     category: 'kernel',
     scripts: {
-      generic: `echo "kernel.randomize_va_space = 2" >> /etc/sysctl.d/99-hardening.conf
+      generic: `set_config "/etc/sysctl.d/99-hardening.conf" "kernel.randomize_va_space" "2" " = "
 sysctl -p /etc/sysctl.d/99-hardening.conf`
     }
   },
@@ -337,7 +333,7 @@ sed -i "s/^PASS_WARN_AGE.*/PASS_WARN_AGE   7/" /etc/login.defs`
     defaultChecked: true,
     category: 'users',
     scripts: {
-      generic: `echo 'Defaults logfile="/var/log/sudo.log"' >> /etc/sudoers.d/hardening
+      generic: `echo 'Defaults logfile="/var/log/sudo.log"' > /etc/sudoers.d/hardening
 echo 'Defaults log_input,log_output' >> /etc/sudoers.d/hardening
 chmod 440 /etc/sudoers.d/hardening`
     }
@@ -374,7 +370,9 @@ chmod 440 /etc/sudoers.d/hardening`
     defaultChecked: true,
     category: 'filesystem',
     scripts: {
-      generic: `echo "tmpfs /tmp tmpfs defaults,noexec,nosuid,nodev 0 0" >> /etc/fstab
+      generic: `if ! grep -qE "\\s+/tmp\\s+" /etc/fstab; then
+  echo "tmpfs /tmp tmpfs defaults,noexec,nosuid,nodev 0 0" >> /etc/fstab
+fi
 mount -o remount,noexec,nosuid,nodev /tmp`
     }
   },
@@ -421,8 +419,8 @@ echo "SUID/SGID audit saved to /root/suid_sgid_audit.log"`
     category: 'filesystem',
     scripts: {
       generic: `sed -i "s/^UMASK.*/UMASK           027/" /etc/login.defs
-echo "umask 027" >> /etc/profile
-echo "umask 027" >> /etc/bash.bashrc`
+if ! grep -q "umask 027" /etc/profile; then echo "umask 027" >> /etc/profile; fi
+if ! grep -q "umask 027" /etc/bash.bashrc; then echo "umask 027" >> /etc/bash.bashrc; fi`
     }
   },
 
@@ -550,10 +548,12 @@ augenrules --load`
     defaultChecked: false,
     category: 'logging',
     scripts: {
-      generic: `cat <<'EOF' >> /etc/rsyslog.conf
+      generic: `if ! grep -q "@@{{SYSLOG_SERVER}}" /etc/rsyslog.conf; then
+  cat <<'EOF' >> /etc/rsyslog.conf
 # Remote log forwarding — added by hardening script
 *.* @@{{SYSLOG_SERVER}}:514
 EOF
+fi
 systemctl restart rsyslog`
     }
   },

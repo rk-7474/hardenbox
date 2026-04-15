@@ -19,6 +19,43 @@ fi
 
 echo "Starting VPS hardening process for ${distro}..."
 
+# --- Helper Functions ---
+backup_file() {
+  local file=$1
+  if [ -f "$file" ]; then
+    local backup_name="\${file}.bak.$(date +%F_%H-%M-%S)"
+    cp -p "$file" "$backup_name"
+    echo "Backed up $file to $backup_name"
+  fi
+}
+
+set_config() {
+  local file=$1
+  local key=$2
+  local value=$3
+  local separator=\${4:-" "}
+  
+  if [ ! -f "$file" ]; then
+    touch "$file"
+  fi
+  
+  # Check if the key exists (commented or uncommented)
+  if grep -qE "^[#\\s]*\${key}[\\s=]+" "$file"; then
+    # Replace the existing line
+    sed -i -E "s/^[#\\s]*\${key}[\\s=]+.*/\${key}\${separator}\${value}/" "$file"
+  else
+    # Append to the end of the file
+    echo "\${key}\${separator}\${value}" >> "$file"
+  fi
+}
+
+# Backup critical configurations before modifying
+echo "Backing up critical configurations..."
+backup_file "/etc/ssh/sshd_config"
+backup_file "/etc/sysctl.conf"
+backup_file "/etc/audit/auditd.conf"
+backup_file "/etc/default/ufw"
+
 # Update package lists
 `;
 
@@ -67,9 +104,17 @@ echo "Starting VPS hardening process for ${distro}..."
   });
 
   script += `
-# Restart SSH service to apply changes
-echo "Restarting SSH service..."
-systemctl restart ssh || systemctl restart sshd
+# Validate and Restart SSH service
+echo "Validating SSH configuration..."
+if sshd -t; then
+  echo "SSH configuration is valid. Restarting SSH service..."
+  systemctl restart ssh || systemctl restart sshd
+else
+  echo "ERROR: SSH configuration validation failed!"
+  echo "Please check /etc/ssh/sshd_config and restore from backup if necessary."
+  echo "Hardening script aborted to prevent locking you out."
+  exit 1
+fi
 
 echo "--------------------------------------------------"
 echo "Hardening complete!"
