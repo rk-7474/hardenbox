@@ -11,10 +11,11 @@ import {
   HelpCircle,
   Code,
   Sun,
-  Moon
+  Moon,
+  ShieldAlert
 } from 'lucide-react';
 import { useEffect } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -24,6 +25,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { HARDENING_OPTIONS } from './constants';
 import { generateHardeningScript } from './lib/script-generator';
 import { Distro } from './types';
+import { TrustDialog } from '@/components/TrustDialog';
 
 export default function App() {
   const [distro, setDistro] = useState<Distro>('ubuntu');
@@ -36,6 +38,7 @@ export default function App() {
   const [syslogServer, setSyslogServer] = useState('logs.example.com');
   const [copied, setCopied] = useState(false);
   const [isDark, setIsDark] = useState(false);
+  const [isTrustDialogOpen, setIsTrustDialogOpen] = useState(false);
 
   useEffect(() => {
     if (isDark) {
@@ -259,6 +262,15 @@ export default function App() {
               <span className="font-bold text-text-main">{activeCount}</span> security modules selected for <span className="font-bold text-text-main uppercase">{distro}</span>.
             </div>
             <div className="flex items-center gap-3 md:gap-5 w-full md:w-auto justify-center">
+              <Button
+                variant="outline"
+                onClick={() => setIsTrustDialogOpen(true)}
+                className="hidden sm:flex items-center gap-2 px-4 h-12 border-2 rounded-xl border-amber-700 dark:border-amber-500/20 text-amber-700 dark:text-amber-500 bg-amber-500/5 dark:bg-transparent hover:bg-amber-500/10 hover:border-amber-500/40 cursor-pointer font-bold text-sm transition-all"
+              >
+                <ShieldAlert className="w-4 h-4" />
+                Don't trust this?
+              </Button>
+
               <Tooltip>
                 <TooltipTrigger 
                   className="group/button inline-flex shrink-0 items-center justify-center rounded-xl border bg-card-bg border-border-main size-12 transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px hover:bg-bg-main cursor-pointer"
@@ -295,6 +307,11 @@ export default function App() {
           </footer>
         </div>
       </div>
+      <TrustDialog 
+        isOpen={isTrustDialogOpen} 
+        onClose={() => setIsTrustDialogOpen(false)} 
+        script={script} 
+      />
     </TooltipProvider>
   );
 }
