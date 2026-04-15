@@ -77,26 +77,38 @@ export default function App() {
   return (
     <TooltipProvider>
       <div className="h-screen bg-bg-main overflow-hidden">
-        <div className="w-full h-full bg-card-bg grid grid-rows-[96px_1fr_120px]">
+        <div className="w-full h-full bg-card-bg flex flex-col">
           {/* Header */}
-          <header className="border-b border-border-main px-12 flex items-center justify-between bg-card-bg">
-            <div className="flex items-center gap-8">
-              <div className="flex items-center gap-4">
-                <img src="/hardenbox.png" alt="HardenBox Logo" className="w-10 h-10 object-contain" referrerPolicy="no-referrer" />
-                <h1 className="font-extrabold text-2xl tracking-tight uppercase">
-                  HARDEN<span className="text-accent">BOX</span>
-                </h1>
+          <header className="border-b border-border-main px-4 md:px-12 py-4 md:py-0 md:h-[96px] flex flex-col md:flex-row items-center justify-between bg-card-bg shrink-0 gap-4">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 w-full md:w-auto">
+              <div className="flex items-center gap-4 justify-between w-full md:w-auto">
+                <div className="flex items-center gap-4">
+                  <img src="/hardenbox.png" alt="HardenBox Logo" className="w-10 h-10 object-contain" referrerPolicy="no-referrer" />
+                  <h1 className="font-extrabold text-2xl tracking-tight uppercase">
+                    HARDEN<span className="text-accent">BOX</span>
+                  </h1>
+                </div>
+                <div className="md:hidden">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setIsDark(!isDark)}
+                    className="rounded-full border-border-main bg-card-bg hover:bg-bg-main w-10 h-10"
+                  >
+                    {isDark ? <Sun className="w-4 h-4 text-accent" /> : <Moon className="w-4 h-4 text-text-sub" />}
+                  </Button>
+                </div>
               </div>
               
-              <div className="h-8 w-px bg-border-main" />
+              <div className="hidden md:block h-8 w-px bg-border-main" />
 
-              <div className="flex gap-1.5 bg-bg-main p-1.5 rounded-xl border border-border-main">
+              <div className="flex gap-1.5 bg-bg-main p-1.5 rounded-xl border border-border-main w-full md:w-auto overflow-x-auto">
                 {(['ubuntu', 'debian', 'centos'] as Distro[]).map((d) => (
                   <button
                     key={d}
                     type="button"
                     onClick={() => setDistro(d)}
-                    className={`px-5 py-2 rounded-lg text-[13px] font-bold uppercase tracking-wider transition-all cursor-pointer select-none ${
+                    className={`flex-1 md:flex-none px-5 py-2 rounded-lg text-[13px] font-bold uppercase tracking-wider transition-all cursor-pointer select-none whitespace-nowrap ${
                       distro === d
                         ? 'bg-card-bg text-text-main shadow-sm border border-border-main'
                         : 'text-text-sub hover:text-text-main border border-transparent'
@@ -108,7 +120,7 @@ export default function App() {
               </div>
             </div>
             
-            <div className="flex items-center gap-5">
+            <div className="hidden md:flex items-center gap-5">
               <Button
                 variant="outline"
                 size="icon"
@@ -121,9 +133,9 @@ export default function App() {
           </header>
 
           {/* Main Content */}
-          <div className="min-h-0 h-full overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-hidden">
             <ScrollArea className="h-full border-none">
-              <main className="p-12 grid grid-cols-3 gap-x-10 gap-y-14">
+              <main className="p-6 md:p-12 grid grid-cols-1 lg:grid-cols-3 gap-x-10 gap-y-10 md:gap-y-14">
               {categories.map(category => (
                 <div key={category} className="flex flex-col gap-5">
                   <h3 className="text-[12px] font-bold uppercase tracking-widest text-text-sub mb-1 flex items-center gap-2.5">
@@ -242,11 +254,11 @@ export default function App() {
         </div>
 
           {/* Footer */}
-          <footer className="border-t border-border-main px-12 flex items-center justify-between bg-card-bg">
-            <div className="text-base text-text-sub">
+          <footer className="border-t border-border-main px-4 md:px-12 py-6 md:py-0 md:h-[120px] flex flex-col md:flex-row items-center justify-between bg-card-bg shrink-0 gap-6 md:gap-4">
+            <div className="text-base text-text-sub text-center md:text-left">
               <span className="font-bold text-text-main">{activeCount}</span> security modules selected for <span className="font-bold text-text-main uppercase">{distro}</span>.
             </div>
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-3 md:gap-5 w-full md:w-auto justify-center">
               <Tooltip>
                 <TooltipTrigger 
                   className="group/button inline-flex shrink-0 items-center justify-center rounded-xl border bg-card-bg border-border-main size-12 transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px hover:bg-bg-main cursor-pointer"
@@ -275,7 +287,7 @@ export default function App() {
 
               <Button 
                 onClick={handleDownload}
-                className="px-8 py-3 h-12 rounded-xl bg-accent hover:bg-blue-700 text-white font-bold text-base border-none cursor-pointer"
+                className="flex-1 md:flex-none px-4 md:px-8 py-3 h-12 rounded-xl bg-accent hover:bg-blue-700 text-white font-bold text-sm md:text-base border-none cursor-pointer"
               >
                 Generate hardening.sh
               </Button>
